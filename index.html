@@ -3,325 +3,215 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>個人財務記帳系統 v2</title>
+<title>個人財務記帳系統 v6</title>
 <style>
-:root{
- --bg:#f6f7f9;--card:#ffffff;--text:#1f2937;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;
- --income:#047857;--expense:#b91c1c;--soft:#f3f4f6;--warning:#92400e;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);}
-header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10;padding:14px 16px}
-header h1{font-size:20px;margin:0 0 4px} header p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}
-.wrap{max-width:1100px;margin:0 auto;padding:16px 14px 80px}
- 
-.tabs{
- display:flex;
- gap:10px;
- overflow-x:auto;
- padding:10px 0 14px;
- margin-bottom:10px;
- -webkit-overflow-scrolling:touch;
-}
-.tab{
- flex:0 0 auto;
- min-width:116px;
- border:1px solid #d1d5db;
- background:#ffffff;
- color:#374151;
- border-radius:999px;
- padding:12px 18px;
- white-space:nowrap;
- font-size:15px;
- font-weight:700;
- text-align:center;
-}
-.tab.active{
- background:var(--accent);
- color:#ffffff;
- border-color:var(--accent);
-}
- 
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.col-12{grid-column:span 12}.col-8{grid-column:span 8}.col-6{grid-column:span 6}.col-4{grid-column:span 4}.col-3{grid-column:span 3}
-@media(max-width:760px){.col-8,.col-6,.col-4,.col-3{grid-column:span 12}.wrap{padding:12px 10px 80px}.card{padding:14px}.hide-mobile{display:none}}
-h2{font-size:18px;margin:0 0 12px} h3{font-size:15px;margin:12px 0 8px}.hint{color:var(--muted);font-size:13px;line-height:1.5}.row{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}.field{grid-column:span 6}.field.full{grid-column:span 12}.field.third{grid-column:span 4}.field.quarter{grid-column:span 3}
-@media(max-width:760px){.field,.field.third,.field.quarter{grid-column:span 12}}
-label{display:block;font-size:13px;color:var(--muted);margin:0 0 5px} input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:white;padding:11px 12px;font-size:16px;color:var(--text)}textarea{min-height:74px;resize:vertical}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}button{border:0;border-radius:12px;padding:11px 14px;background:var(--accent);color:white;font-size:15px}button.secondary{background:var(--soft);color:var(--text);border:1px solid var(--line)}button.danger{background:#991b1b}button.small{padding:7px 10px;font-size:13px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{background:var(--soft);border-radius:14px;padding:12px}.metric .label{font-size:12px;color:var(--muted)}.metric .num{font-size:20px;font-weight:700;margin-top:4px}.income{color:var(--income)}.expense{color:var(--expense)}.warning{color:var(--warning)}
-table{width:100%;border-collapse:collapse;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top}th{color:var(--muted);font-weight:600;background:#fafafa;position:sticky;top:76px} .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--line);border-radius:14px}.pill{display:inline-block;padding:3px 8px;border-radius:999px;background:var(--soft);font-size:12px;color:var(--muted)}.hidden{display:none!important}.record-card{border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0;background:white}.record-card .top{display:flex;justify-content:space-between;gap:8px}.record-card .title{font-weight:700}.record-card .meta{color:var(--muted);font-size:13px;line-height:1.5;margin-top:6px}.mobile-list{display:none}@media(max-width:760px){.desktop-table{display:none}.mobile-list{display:block}.summary{grid-template-columns:repeat(2,1fr)}}
-.notice{background:#fffbeb;border:1px solid #fde68a;border-radius:14px;padding:12px;color:#78350f;font-size:13px;line-height:1.5}.divider{height:1px;background:var(--line);margin:14px 0}.right{text-align:right}.kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:1px 5px}
- 
-.option-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media(max-width:760px){.option-grid{grid-template-columns:1fr}}
-.option-box{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}
-.option-box h3{margin-top:0}
-.option-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.option-tag{display:inline-flex;align-items:center;gap:6px;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 8px;font-size:13px}
-.option-tag button{background:transparent;color:#991b1b;border:0;padding:0;font-size:15px;line-height:1}
+:root{--bg:#f5f7fb;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--dark:#111827;--ok:#059669;--bad:#dc2626;--warn:#d97706;--blue:#2563eb}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",Arial,sans-serif;color:var(--ink)}
+.wrap{max-width:1120px;margin:auto;padding:20px} h1{margin:8px 0 6px;font-size:28px} .sub{color:var(--muted);line-height:1.5;margin-bottom:16px}
+.tabs{display:flex;gap:10px;overflow-x:auto;padding:4px 0 12px;position:sticky;top:0;background:var(--bg);z-index:10}.tab{flex:0 0 auto;min-width:104px;padding:11px 15px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#374151;font-weight:700;white-space:nowrap}.tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+.panel{display:none}.panel.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 16px rgba(0,0,0,.04)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media(max-width:760px){.grid,.grid3,.grid4{grid-template-columns:1fr}.wrap{padding:14px}h1{font-size:24px}}
+label{display:block;font-weight:700;margin:10px 0 6px;color:#374151} input,select,textarea{width:100%;padding:13px 14px;border:1px solid #d1d5db;border-radius:14px;background:#fff;font-size:16px;color:#111827} textarea{min-height:88px} input[type=checkbox]{width:auto;transform:scale(1.2);margin-right:8px}
+button{border:0;border-radius:13px;padding:12px 14px;background:var(--dark);color:#fff;font-weight:800;font-size:15px}button.secondary{background:#fff;color:#111827;border:1px solid var(--line)}button.danger{background:#fee2e2;color:#991b1b}button.small{padding:8px 10px;font-size:13px;border-radius:10px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.right{margin-left:auto}.muted{color:var(--muted)}.pill{display:inline-block;padding:4px 9px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:800}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}.kpi .name{color:var(--muted);font-size:13px}.kpi .num{font-size:24px;font-weight:900;margin-top:5px}@media(max-width:760px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi .num{font-size:20px}}
+.tablewrap{overflow-x:auto} table{width:100%;border-collapse:collapse;min-width:850px}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;font-size:14px}th{background:#f9fafb;color:#374151;position:sticky;top:55px}.hidden{display:none!important}.hint{font-size:13px;color:var(--muted);line-height:1.45}.sectionTitle{font-size:20px;font-weight:900;margin:0 0 8px}.bar{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden}.bar>span{display:block;height:100%;background:var(--blue);max-width:100%}
 </style>
 </head>
 <body>
-<header>
- <h1>個人財務記帳系統 v2</h1>
- <p>快速記帳保留當下最容易忘的欄位；完整交易表支援帳面/實際、分期、預算、帳別、支付路徑與分析。</p>
-</header>
 <div class="wrap">
- <div class="tabs">
-   <button class="tab active" data-tab="quick">快速記帳</button>
-   <button class="tab" data-tab="records">完整交易表</button>
-   <button class="tab" data-tab="installments">分期管理</button>
-   <button class="tab" data-tab="dashboard">統計儀表板</button>
-   <button class="tab" data-tab="settings">設定/備份</button>
+<h1>個人財務記帳系統 v6</h1>
+<div class="sub">整合快速記帳、帳面/實際金流、待回收款、分期、每月預算與預算移轉、帳戶/信用卡管理、投資資產總覽。資料存在本機瀏覽器 localStorage。</div>
+<div clas
+
+s="tabs" id="tabs"></div>
+
+<section id="dash" class="panel active">
+ <div class="kpis" id="dashboardKpis"></div>
+ <div class="card"><div class="sectionTitle">本月預算狀況</div><div id="dashBudget"></div></div>
+ <div class="card"><div class="sectionTitle">帳戶與信用卡摘要</div><div id="dashAccounts"></div></div>
+</section>
+
+<section id="quick" class="panel">
+ <div class="card">
+   <div class="sectionTitle" id="formTitle">快速記帳</div>
+   <div class="hint">快速頁保留當下最容易忘的欄位；帳面與實際預設同步，特殊情況可取消同步手動調整。</div>
+   <input type="hidden" id="editId">
+   <div class="grid">
+     <div><label>日期</label><input type="date" id="date"></div>
+     <div><label>交易類型</label><select id="txType"></select></div>
+     <div><label>項目</label><input id="item" placeholder="例：家樂福、麥當勞、薪資"></div>
+     <div><label>細項 / 實際買的東西</label><input id="subItem" placeholder="例：拖鞋、衛生紙、晚餐"></div>
+     <div><label>項目類別</label><select id="itemCategory"></select></div>
+     <div><label>預算項目</label><select id="budgetItem"></select></div>
+     <div><label>收付工具</label><select id="payTool"></select></div>
+     <div><label>收付方式</label><select id="payMethod"></select></div>
+     <div><label>實際支出 / 入帳來源</label><select id="accountSource"></select></div>
+     <div><label>財務狀態</label><select id="financialStatus"></select></div>
+   </div>
+   <div class="card" style="background:#f9fafb">
+     <div class="sectionTitle">帳面與實際金額</div>
+     <div class="grid">
+       <div><label>帳面方向</label><select id="bookDirection"><option>支出</option><option>收入</option><option>無</option></select></div>
+       <div><label>帳面金額</label><input type="number" id="bookAmount" min="0" step="1" placeholder="0"></div>
+     </div>
+     <label><input type="checkbox" id="syncActual" checked>實際金流同步帳面</label>
+     <div class="grid" id="actualBox">
+       <div><label>實際方向</label><select id="actualDirection"><option>支出</option><option>收入</option><option>無</option></select></div>
+       <div><label>實際金額</label><input type="number" id="actualAmount" min="0" step="1" placeholder="0"></div>
+     </div>
+   </div>
+   <details class="card"><summary><b>進階欄位：待回收 / 分期 / 帳別 / 備註</b></summary>
+     <div class="grid">
+       <div><label>回收對象</label><input id="recoverFrom" placeholder="例：公司、朋友A"></div>
+       <div><label>預期回收金額</label><input type="number" id="expectedRecover" min="0" step="1"></div>
+       <div><label>已回收金額</label><input type="number" id="recoveredAmount" min="0" step="1"></div>
+       <div><label>預計回收日</label><input type="date" id="recoverDate"></div>
+       <div><label>分期該期期款</label><input type="number" id="installmentPay" min="0" step="1"></div>
+       <div><label>總共分幾期</label><input type="number" id="installmentTotal" min="0" step="1"></div>
+       <div><label>帳別</label><select id="ledgerType"></select></div>
+       <div><label>備註</label><input id="note" placeholder="補充說明"></div>
+     </div>
+   </details>
+   <div class="row"><button onclick="saveTx()">儲存紀錄</button><button class="secondary" onclick="resetTxForm()">清空</button></div>
  </div>
- 
- <section id="quick" class="page">
-   <div class="grid">
-     <div class="card col-8">
-       <h2>快速記帳</h2>
-       <p class="hint">這裡放「消費當下才最清楚、事後容易忘」的欄位：日期、項目、細項、類別、收付工具/方式、實際帳戶來源。</p>
-       <div class="row">
-         <div class="field third"><label>日期</label><input id="q_date" type="date"></div>
-         <div class="field third"><label>交易類型</label><select id="q_type"><option>支出</option><option>收入</option><option>墊款</option><option>還款</option><option>借出</option><option>收回借款</option><option>儲值/轉帳</option><option>分期付款</option></select></div>
-         <div class="field third"><label>項目</label><input id="q_item" placeholder="例如：家樂福、麥當勞、薪資"></div>
-         <div class="field full"><label>細項 / 實際買的東西</label><input id="q_detail" placeholder="例如：拖鞋、衛生紙、晚餐、交通加值"></div>
-         <div class="field third"><label>項目類別</label><input id="q_category" list="categoryList" placeholder="餐飲、日用品、交通"></div>
-         <div class="field third"><label>費用類別</label><select id="q_costClass"><option>必要</option><option>想要</option><option>投資</option><option>收入</option><option>移轉</option><option>代墊/借款</option></select></div>
-         <div class="field third"><label>帳別</label><select id="q_accountBook"><option>經常帳</option><option>資本帳</option><option>負債帳</option><option>應收帳</option></select></div>
-         <div class="field third"><label>收付工具</label><select id="q_tool"><option>信用卡</option><option>現金</option><option>銀行帳戶</option><option>電子票證</option><option>電子支付</option><option>其他</option></select></div>
-         <div class="field third"><label>收付方式</label><input id="q_method" list="methodList" placeholder="悠遊卡、LINE Pay、Apple Pay"></div>
-         <div class="field third"><label>實際支出/入帳來源</label><input id="q_source" list="sourceList" placeholder="A帳戶、中信卡、現金"></div>
-         <div class="field third"><label>帳面支出</label><input id="q_bookExpense" type="number" inputmode="decimal" placeholder="商品/服務價值"></div>
-         <div class="field third"><label>帳面收入</label><input id="q_bookIncome" type="number" inputmode="decimal" placeholder="收入價值"></div>
-         <div class="field third"><label>實際支出</label><input id="q_actualExpense" type="number" inputmode="decimal" placeholder="本次真正扣款"></div>
-         <div class="field third"><label>實際收入</label><input id="q_actualIncome" type="number" inputmode="decimal" placeholder="本次真正入帳"></div>
-         <div class="field third"><label>預算</label><input id="q_budget" list="budgetList" placeholder="生活費、娛樂、投資"></div>
-         <div class="field third"><label>分期該期期款</label><input id="q_installmentPayment" type="number" inputmode="decimal" placeholder="例如：2000"></div>
-         <div class="field third"><label>總共分幾期</label><input id="q_installmentTotal" type="number" inputmode="numeric" placeholder="例如：24"></div>
-         <div class="field full"><label>備註</label><textarea id="q_note" placeholder="例如：幫小美墊、家用、信用卡自動加值"></textarea></div>
-       </div>
-       <div class="actions">
-         <button onclick="addQuickRecord()">新增紀錄</button>
-         <button class="secondary" onclick="clearQuickForm()">清空</button>
-         <button class="secondary" onclick="fillActualFromBook()">用帳面金額帶入實際金額</button>
-       </div>
-     </div>
-     <div class="card col-4">
-       <h2>本月摘要</h2>
-       <div id="monthSummary" class="summary"></div>
-       <div class="divider"></div>
-       <div class="notice">建議邏輯：<br>1. 日常消費：帳面支出＝實際支出。<br>2. 分期消費：帳面支出填原價，實際支出填本期付款。<br>3. 儲值/轉帳：通常不算帳面支出，只算實際現金流或帳戶移轉備註。</div>
-     </div>
+</section>
+
+<section id="txs" class="panel">
+ <div class="card">
+   <div class="sectionTitle">交易搜尋與完整交易表</div>
+   <div class="grid4">
+     <div><label>關鍵字</label><input id="q" oninput="renderAll()" placeholder="項目、細項、帳戶"></div>
+     <div><label>月份</label><input id="filterMonth" type="month" onchange="renderAll()"></div>
+     <div><label>交易類型</label><select id="filterType" onchange="renderAll()"><option value="">全部</option></select></div>
+     <div><label>預算項目</l
+
+abel><select id="filterBudget" onchange="renderAll()"><option value="">全部</option></select></div>
    </div>
- </section>
- 
- <section id="records" class="page hidden">
-   <div class="card">
-     <h2>完整交易表</h2>
-     <div class="actions">
-       <button class="secondary" onclick="exportCSV()">匯出 CSV</button>
-       <button class="secondary" onclick="exportJSON()">匯出備份 JSON</button>
-       <button class="danger" onclick="clearAllRecords()">清除全部紀錄</button>
-     </div>
-     <div class="table-wrap desktop-table"><table><thead><tr><th>日期</th><th>類型</th><th>項目/細項</th><th>類別</th><th>收付工具/方式</th><th>實際來源</th><th>帳面小計</th><th>實際小計</th><th>費用/帳別/預算</th><th>分期</th><th></th></tr></thead><tbody id="recordsBody"></tbody></table></div>
-     <div id="recordsMobile" class="mobile-list"></div>
-   </div>
- </section>
- 
- <section id="installments" class="page hidden">
-   <div class="grid">
-     <div class="card col-6">
-       <h2>新增分期主檔</h2>
-       <div class="row">
-         <div class="field"><label>分期名稱</label><input id="i_name" placeholder="例如：iPhone、家電、課程"></div>
-         <div class="field"><label>原價/帳面金額</label><input id="i_total" type="number" inputmode="decimal"></div>
-         <div class="field"><label>總期數</label><input id="i_terms" type="number" inputmode="numeric"></div>
-         <div class="field"><label>每期金額</label><input id="i_payment" type="number" inputmode="decimal"></div>
-         <div class="field"><label>開始日期</label><input id="i_start" type="date"></div>
-         <div class="field"><label>實際扣款帳戶</label><input id="i_source" list="sourceList" placeholder="中信卡、A帳戶"></div>
-         <div class="field full"><label>備註</label><textarea id="i_note"></textarea></div>
-       </div>
-       <div class="actions"><button onclick="addInstallmentPlan()">新增分期主檔</button><button class="secondary" onclick="generateInstallmentRecords()">依主檔產生未來期款</button></div>
-     </div>
-     <div class="card col-6">
-       <h2>分期清單</h2>
-       <div id="installmentList"></div>
-     </div>
-   </div>
- </section>
- 
- <section id="dashboard" class="page hidden">
-   <div class="grid">
-     <div class="card col-12"><h2>總覽</h2><div id="overallSummary" class="summary"></div></div>
-     <div class="card col-6"><h2>依項目類別</h2><div id="categoryStats"></div></div>
-     <div class="card col-6"><h2>依實際帳戶來源</h2><div id="sourceStats"></div></div>
-     <div class="card col-6"><h2>依費用類別</h2><div id="costClassStats"></div></div>
-     <div class="card col-6"><h2>依預算</h2><div id="budgetStats"></div></div>
-   </div>
- </section>
- 
- <section id="settings" class="page hidden">
-   <div class="grid">
-     <div class="card col-12">
-       <h2>選項管理</h2>
-       <p class="hint">所有下拉選項都可以自己新增或刪除。刪除選項不會刪掉既有交易紀錄，只是不再出現在未來的選單中。</p>
-       <div id="optionManager" class="option-grid"></div>
-     </div>
-     <div class="card col-6"><h2>匯入備份</h2><p class="hint">貼上先前匯出的 JSON 備份。備份會包含交易、分期主檔與自訂選項。</p><textarea id="importBox" placeholder='{"records":[],"installments":[],"options":{}}'></textarea><div class="actions"><button onclick="importJSON()">匯入</button></div></div>
-     <div class="card col-6"><h2>欄位設計說明</h2><p class="hint">核心交易都放同一張表，避免資料分散；快速記帳頁只放當下容易忘與必要輸入欄位。帳面小計＝帳面收入－帳面支出；實際小計＝實際收入－實際支出。</p><p class="hint">資料儲存在本機瀏覽器 localStorage。換手機、清除瀏覽資料前，請先匯出 JSON 備份。</p></div>
-   </div>
- </section>
- 
- <datalist id="categoryList"></datalist>
- <datalist id="methodList"></datalist>
- <datalist id="sourceList"></datalist>
- <datalist id="budgetList"></datalist>
+ </div>
+ <div class="card tablewrap"><table><thead><tr><th>日期</th><th>類型</th><th>項目/細項</th><th>類別/預算</th><th>帳面</th><th>實際</th><th>帳戶/方式</th><th>待回收</th><th>操作</th></tr></thead><tbody id="txTable"></tbody></table></div>
+</section>
+
+<section id="budget" class="panel">
+ <div class="card"><div class="sectionTitle">每月預算設定</div>
+   <div class="grid3"><div><label>月份</label><input type="month" id="budMonth"></div><div><label>預算項目</label><select id="budItem"></select></div><div><label>預算金額</label><input type="number" id="budAmount" min="0"></div></div>
+   <button onclick="saveBudget()">新增 / 更新預算</button>
+ </div>
+ <div class="card"><div class="sectionTitle">預算移轉</div><div class="hint">用其他預算項目的剩餘額支援另一個項目。系統會保留移轉紀錄，不直接覆蓋原始預算。</div>
+   <div class="grid4"><div><label>月份</label><input type="month" id="trMonth"></div><div><label>從預算</label><select id="trFrom"></select></div><div><label>轉到預算</label><select id="trTo"></select></div><div><label>金額</label><input type="number" id="trAmount" min="0"></div></div>
+   <label>備註</label><input id="trNote" placeholder="例：本月生活費有剩，補娛樂超支">
+   <button onclick="saveBudgetTransfer()">新增預算移轉</button>
+ </div>
+ <div class="card"><div class="sectionTitle">預算 vs 實際花費</div><div id="budgetReport"></div></div>
+ <div class="card tablewrap"><div class="sectionTitle">預算移轉紀錄</div><table><thead><tr><th>月份</th><th>從</th><th>到</th><th>金額</th><th>備註</th><th>操作</th></tr></thead><tbody id="transferTable"></tbody></table></div>
+</section>
+
+<section id="accounts" class="panel">
+ <div class="card"><div class="sectionTitle">帳戶 / 信用卡管理</div><div class="hint">初始化金額由你手動輸入，不寫死在 HTML。信用卡可用來統計刷卡未繳金額；銀行/現金/電子錢包可列入資產。</div>
+   <div class="grid3"><div><label>帳戶名稱</label><input id="accName" placeholder="例：A帳戶、中信卡"></div><div><label>帳戶類型</label><select id="accType"></select></div><div><label>初始化金額 / 目前未繳</label><input type="number" id="accInit" step="1" value="0"></div></div>
+   <div class="grid"><div><label>目前手動餘額（可空白）</label><input type="number" id="accManual" step="1" placeholder="空白則用系統估算"></div><div><label>是否列入資產總額</label><select id="accInclude"><option value="yes">是</option><option value="no">否</option></select></div></div>
+   <button onclick="saveAccount()">新增帳戶 / 信用卡</button>
+ </div>
+ <div class="card tablewrap"><table><thead><tr><th>名稱</th><th>類型</th><th>初始化</th><th>交易變動</th><th>目前估算/手動</th><th>列入資產</th><th>操作</th></tr></thead><tbody id="accountTable"></tbody></table></div>
+</section>
+
+<section id="invest" class="panel">
+ <div class="card"><div class="sectionTitle">投資資產管理</div><div class="hint">不用登記每筆交易，只要定期更新投入本金與目前市值，系統會統計總資產與損益。</div>
+   <div class="grid4"><div><label>標的名稱</label><input id="invName" placeholder="例：0050、基金A"></div><div><label>投資類型</label><select id="invType"></select></div><div><label>投入本金</label><input type="number" id="invPrincipal" min="0"></div><div><label>目前市值</label><input type="number" id="invValue" min="0"></div></div>
+   <button onclick="saveInvestment()">新增 / 更新投資標的</button>
+ </div>
+ <div class="card tablewrap"><table><thead><tr><th>標的</th><th>類型</th><th>投入本金</th><th>目前市值</th><th>損益</th><th>報酬率</th><th>操作</th></tr></thead><tbody id="investmentTable"></tbody></table></div>
+</section>
+
+<section id="installments" class="panel">
+ <div class="card"><div class="sectionTitle">分期管理</div><div class="hint">這裡是分期主檔，用來管理原價、期數、每期與剩餘壓力。實際每期扣款仍建議以交易紀錄記入。</div>
+   <div class="grid4"><div><label>商品
+
+/服務</label><input id="insName"></div><div><label>原價</label><input type="number" id="insTotal"></div><div><label>總期數</label><input type="number" id="insTerms"></div><div><label>已繳期數</label><input type="number" id="insPaidTerms"></div></div>
+   <button onclick="saveInstallment()">新增 / 更新分期</button>
+ </div>
+ <div class="card tablewrap"><table><thead><tr><th>項目</th><th>原價</th><th>期數</th><th>每期</th><th>已繳</th><th>剩餘</th><th>操作</th></tr></thead><tbody id="installmentTable"></tbody></table></div>
+</section>
+
+<section id="settings" class="panel">
+ <div class="card"><div class="sectionTitle">自訂選項</div><div class="hint">所有下拉選項都可自己新增/刪除；帳戶和信用卡請到「帳戶/信用卡」頁新增，會自動出現在實際帳戶來源選單。</div><div id="optionManager"></div></div>
+ <div class="card"><div class="sectionTitle">備份 / 匯入</div><div class="row"><button onclick="exportData()">匯出 JSON 備份</button><button class="secondary" onclick="document.getElementById('importFile').click()">匯入 JSON</button><button class="danger" onclick="clearAll()">清空所有資料</button></div><input id="importFile" type="file" accept=".json" class="hidden" onchange="importData(event)"></div>
+</section>
 </div>
+
 <script>
-const STORAGE_KEY='financeSystemV2.records';
-const INSTALLMENT_KEY='financeSystemV2.installments';
-const OPTIONS_KEY='financeSystemV2.options';
-const DEFAULT_OPTIONS={
- type:['支出','收入','墊款','還款','借出','收回借款','儲值/轉帳','分期付款'],
- costClass:['必要','想要','投資','收入','移轉','代墊/借款'],
- accountBook:['經常帳','資本帳','負債帳','應收帳'],
- tool:['信用卡','現金','銀行帳戶','電子票證','電子支付','其他'],
- category:['餐飲','日用品','交通','娛樂','醫療','學習','旅遊','薪資','投資','保險','房租','水電'],
- method:['LINE Pay','悠遊卡','Apple Pay','街口支付','現金','信用卡刷卡','銀行轉帳'],
- source:['A帳戶','B帳戶','中信信用卡','台新信用卡','玉山銀行','現金','悠遊卡餘額','LINE Pay Money'],
- budget:['生活費','餐飲預算','交通預算','娛樂預算','投資預算','旅行預算','固定支出']
+const KEY='financeSystemV6';
+const optionLabels={txTypes:'交易類型',itemCategories:'項目類別',payTools:'收付工具',payMethods:'收付方式',budgetItems:'預算項目',financialStatuses:'財務狀態',ledgerTypes:'帳別',accountTypes:'帳戶類型',investmentTypes:'投資類型'};
+const defaults={
+options:{txTypes:['支出','收入','資金轉移','應收款','應付款','分期消費','分期付款','退款','調整'],itemCategories:['餐飲','日用品','交通','娛樂','醫療','學習','工作','保險','投資','其他'],payTools:['信用卡','現金','銀行帳戶','電子支付','電子票證'],payMethods:['現金','LINE Pay','Apple Pay','悠遊卡','信用卡實體卡','銀行轉帳'],budgetItems:['生活費','餐飲','交通','保險費','娛樂','投資','工作代墊','其他'],financialStatuses:['一般收支','公司核銷待回收','朋友代墊待回收','借出待回收','已回收','資金轉移','分期付款'],ledgerTypes:['經常帳','資本帳'],accountTypes:['銀行帳戶','信用卡','現金','電子錢包','電子票證','投資帳戶','其他資產'],investmentTypes:['股票','ETF','基金','債券','外幣','其他']},
+transactions:[],budgets:[],budgetTransfers:[],accounts:[{id:id(),name:'A帳戶',type:'銀行帳戶',initial:0,manual:'',include:'yes'},{id:id(),name:'中信信用卡',type:'信用卡',initial:0,manual:'',include:'no'},{id:id(),name:'現金',type:'現金',initial:0,manual:'',include:'yes'}],investments:[],installments:[]
 };
-const OPTION_META={
- type:{label:'交易類型',input:'q_type',kind:'select'},
- costClass:{label:'費用類別',input:'q_costClass',kind:'select'},
- accountBook:{label:'帳別',input:'q_accountBook',kind:'select'},
- tool:{label:'收付工具',input:'q_tool',kind:'select'},
- category:{label:'項目類別',input:'categoryList',kind:'datalist'},
- method:{label:'收付方式',input:'methodList',kind:'datalist'},
- source:{label:'實際支出/入帳來源',input:'sourceList',kind:'datalist'},
- budget:{label:'預算',input:'budgetList',kind:'datalist'}
-};
-let records=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
-let installments=JSON.parse(localStorage.getItem(INSTALLMENT_KEY)||'[]');
-let userOptions=mergeOptions(JSON.parse(localStorage.getItem(OPTIONS_KEY)||'{}'));
-const $=id=>document.getElementById(id);
-const money=n=>Number(n||0).toLocaleString('zh-TW',{maximumFractionDigits:0});
-const today=()=>new Date().toISOString().slice(0,10);
-applyOptions();
-$('q_date').value=today();$('i_start').value=today();
- 
-document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));$(btn.dataset.tab).classList.remove('hidden');renderAll();}));
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(records));localStorage.setItem(INSTALLMENT_KEY,JSON.stringify(installments));localStorage.setItem(OPTIONS_KEY,JSON.stringify(userOptions));renderAll();}
- 
-function mergeOptions(saved){
- const merged={};
- Object.keys(DEFAULT_OPTIONS).forEach(k=>{
-   merged[k]=unique([...(saved[k]||[]),...DEFAULT_OPTIONS[k]]);
- });
- return merged;
-}
-function unique(arr){return [...new Set(arr.map(v=>String(v||'').trim()).filter(Boolean))]}
-function applyOptions(){
- Object.entries(OPTION_META).forEach(([key,meta])=>{
-   const el=$(meta.input); if(!el)return;
-   const current=el.value;
-   el.innerHTML=userOptions[key].map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
-   if(meta.kind==='select'){
-     if(current && userOptions[key].includes(current)) el.value=current;
-     else el.selectedIndex=0;
-   }
- });
-}
-function learnOption(key,value){
- value=String(value||'').trim();
- if(!value)return;
- if(!userOptions[key]) userOptions[key]=[];
- if(!userOptions[key].includes(value)) userOptions[key].push(value);
- localStorage.setItem(OPTIONS_KEY,JSON.stringify(userOptions));
- applyOptions();
-}
-function renderOptionSettings(){
- const box=$('optionManager'); if(!box)return;
- box.innerHTML=Object.entries(OPTION_META).map(([key,meta])=>`
-   <div class="option-box">
-     <h3>${meta.label}</h3>
-     <div class="row">
-       <div class="field"><input id="opt_${key}" placeholder="新增${meta.label}"></div>
-       <div class="field"><button class="secondary" onclick="addOption('${key}')">新增</button></div>
-     </div>
-     <div class="option-tags">
-       ${(userOptions[key]||[]).map(v=>`<span class="option-tag">${escapeHtml(v)} <button title="刪除" onclick="deleteOption('${key}','${encodeURIComponent(v)}')">×</button></span>`).join('')}
-     </div>
-   </div>`).join('');
-}
-function addOption(key){
- const input=$('opt_'+key); if(!input)return;
- const value=input.value.trim();
- if(!value){alert('請輸入選項名稱');return;}
- learnOption(key,value);
- input.value='';
- renderOptionSettings();
-}
-function deleteOption(key,encodedValue){
- const value=decodeURIComponent(encodedValue);
- if(!confirm(`確定刪除「${value}」？既有紀錄不會被刪除。`))return;
- userOptions[key]=(userOptions[key]||[]).filter(v=>v!==value);
- localStorage.setItem(OPTIONS_KEY,JSON.stringify(userOptions));
- applyOptions();
- renderOptionSettings();
-}
- 
-function num(id){return Number($(id).value||0)}
-function addQuickRecord(){
- const r={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),date:$('q_date').value||today(),type:$('q_type').value,item:$('q_item').value.trim(),detail:$('q_detail').value.trim(),category:$('q_category').value.trim(),tool:$('q_tool').value,method:$('q_method').value.trim(),source:$('q_source').value.trim(),bookExpense:num('q_bookExpense'),bookIncome:num('q_bookIncome'),actualExpense:num('q_actualExpense'),actualIncome:num('q_actualIncome'),costClass:$('q_costClass').value,installmentPayment:num('q_installmentPayment'),installmentTotal:num('q_installmentTotal'),accountBook:$('q_accountBook').value,budget:$('q_budget').value.trim(),note:$('q_note').value.trim(),createdAt:new Date().toISOString()};
- if(!r.item && !r.detail){alert('請至少輸入「項目」或「細項」。');return}
- if(!(r.bookExpense||r.bookIncome||r.actualExpense||r.actualIncome)){alert('請至少輸入一個金額。');return}
- learnOption('category',r.category);learnOption('method',r.method);learnOption('source',r.source);learnOption('budget',r.budget);
- records.unshift(r);save();clearQuickForm(true);
-}
-function clearQuickForm(keepDefaults=false){['q_item','q_detail','q_category','q_method','q_source','q_bookExpense','q_bookIncome','q_actualExpense','q_actualIncome','q_budget','q_installmentPayment','q_installmentTotal','q_note'].forEach(id=>$(id).value=''); if(!keepDefaults){$('q_date').value=today();}}
-function fillActualFromBook(){ if(num('q_bookExpense')&&!num('q_actualExpense')) $('q_actualExpense').value=$('q_bookExpense').value; if(num('q_bookIncome')&&!num('q_actualIncome')) $('q_actualIncome').value=$('q_bookIncome').value; }
-function bookSubtotal(r){return Number(r.bookIncome||0)-Number(r.bookExpense||0)} function actualSubtotal(r){return Number(r.actualIncome||0)-Number(r.actualExpense||0)}
-function renderRecords(){
- $('recordsBody').innerHTML=records.map(r=>`<tr><td>${r.date}</td><td><span class="pill">${r.type}</span></td><td><b>${escapeHtml(r.item)}</b><br><span class="hint">${escapeHtml(r.detail)}</span></td><td>${escapeHtml(r.category)}</td><td>${escapeHtml(r.tool)}<br><span class="hint">${escapeHtml(r.method)}</span></td><td>${escapeHtml(r.source)}</td><td class="right ${bookSubtotal(r)>=0?'income':'expense'}">${money(bookSubtotal(r))}</td><td class="right ${actualSubtotal(r)>=0?'income':'expense'}">${money(actualSubtotal(r))}</td><td>${escapeHtml(r.costClass)} / ${escapeHtml(r.accountBook)}<br><span class="hint">${escapeHtml(r.budget)}</span></td><td>${r.installmentPayment?`本期 ${money(r.installmentPayment)}<br>`:''}${r.installmentTotal?`共 ${r.installmentTotal} 期`:''}</td><td><button class="small danger" onclick="deleteRecord('${r.id}')">刪除</button></td></tr>`).join('');
- $('recordsMobile').innerHTML=records.map(r=>`<div class="record-card"><div class="top"><div><div class="title">${escapeHtml(r.item||r.detail)}</div><div class="hint">${r.date}｜${r.type}</div></div><div class="right"><div class="${actualSubtotal(r)>=0?'income':'expense'}">實際 ${money(actualSubtotal(r))}</div><div class="hint">帳面 ${money(bookSubtotal(r))}</div></div></div><div class="meta">細項：${escapeHtml(r.detail)}<br>類別：${escapeHtml(r.category)}｜${escapeHtml(r.costClass)}｜${escapeHtml(r.accountBook)}<br>收付：${escapeHtml(r.tool)} / ${escapeHtml(r.method)}｜來源：${escapeHtml(r.source)}<br>預算：${escapeHtml(r.budget)} ${r.installmentTotal?`｜分期：${r.installmentPayment||''}/${r.installmentTotal}期`:''}<br>${escapeHtml(r.note||'')}</div><div class="actions"><button class="small danger" onclick="deleteRecord('${r.id}')">刪除</button></div></div>`).join('');
-}
-function deleteRecord(id){if(confirm('確定刪除此筆紀錄？')){records=records.filter(r=>r.id!==id);save();}}
-function clearAllRecords(){if(confirm('確定清除全部交易紀錄？此動作無法復原，請先匯出備份。')){records=[];save();}}
-function sumBy(filterFn, calcFn){return records.filter(filterFn).reduce((a,r)=>a+calcFn(r),0)}
-function renderSummaries(){
- const ym=new Date().toISOString().slice(0,7); const month=records.filter(r=>String(r.date).slice(0,7)===ym);
- const mBookExp=month.reduce((a,r)=>a+Number(r.bookExpense||0),0), mBookInc=month.reduce((a,r)=>a+Number(r.bookIncome||0),0), mActExp=month.reduce((a,r)=>a+Number(r.actualExpense||0),0), mActInc=month.reduce((a,r)=>a+Number(r.actualIncome||0),0);
- $('monthSummary').innerHTML=metric('帳面收入',mBookInc,'income')+metric('帳面支出',mBookExp,'expense')+metric('實際收入',mActInc,'income')+metric('實際支出',mActExp,'expense');
- const bExp=records.reduce((a,r)=>a+Number(r.bookExpense||0),0), bInc=records.reduce((a,r)=>a+Number(r.bookIncome||0),0), aExp=records.reduce((a,r)=>a+Number(r.actualExpense||0),0), aInc=records.reduce((a,r)=>a+Number(r.actualIncome||0),0);
- $('overallSummary').innerHTML=metric('總帳面小計',bInc-bExp,bInc-bExp>=0?'income':'expense')+metric('總實際小計',aInc-aExp,aInc-aExp>=0?'income':'expense')+metric('帳面總支出',bExp,'expense')+metric('實際總支出',aExp,'expense');
- renderStats('categoryStats','category');renderStats('sourceStats','source');renderStats('costClassStats','costClass');renderStats('budgetStats','budget');
-}
-function metric(label,value,cls){return `<div class="metric"><div class="label">${label}</div><div class="num ${cls}">${money(value)}</div></div>`}
-function renderStats(el,key){
- const map={};records.forEach(r=>{const k=r[key]||'未分類';map[k]=(map[k]||0)+actualSubtotal(r)});
- const rows=Object.entries(map).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
- $(el).innerHTML=rows.length?`<table><tbody>${rows.map(([k,v])=>`<tr><td>${escapeHtml(k)}</td><td class="right ${v>=0?'income':'expense'}">${money(v)}</td></tr>`).join('')}</tbody></table>`:'<p class="hint">尚無資料</p>';
-}
-function addInstallmentPlan(){
- const total=Number($('i_total').value||0), terms=Number($('i_terms').value||0), payment=Number($('i_payment').value||0);
- if(!$('i_name').value.trim()||!total||!terms){alert('請輸入分期名稱、原價與總期數。');return}
- installments.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name:$('i_name').value.trim(),total,terms,payment:payment||Math.round(total/terms),start:$('i_start').value||today(),source:$('i_source').value.trim(),note:$('i_note').value.trim(),createdAt:new Date().toISOString()});
- ['i_name','i_total','i_terms','i_payment','i_source','i_note'].forEach(id=>$(id).value='');$('i_start').value=today();save();
-}
-function renderInstallments(){
- $('installmentList').innerHTML=installments.length?installments.map(p=>{const paid=records.filter(r=>r.installmentPlanId===p.id).reduce((a,r)=>a+Number(r.actualExpense||0),0);const remain=Math.max(0,p.total-paid);return `<div class="record-card"><div class="top"><div><div class="title">${escapeHtml(p.name)}</div><div class="hint">開始：${p.start}｜共 ${p.terms} 期｜每期 ${money(p.payment)}</div></div><div class="right"><div>原價 ${money(p.total)}</div><div class="warning">剩餘 ${money(remain)}</div></div></div><div class="meta">扣款來源：${escapeHtml(p.source)}<br>${escapeHtml(p.note||'')}</div><div class="actions"><button class="small secondary" onclick="makeOneInstallment('${p.id}')">新增下一期付款</button><button class="small danger" onclick="deleteInstallment('${p.id}')">刪除主檔</button></div></div>`}).join(''):'<p class="hint">尚無分期主檔</p>';
-}
-function makeOneInstallment(id){const p=installments.find(x=>x.id===id);if(!p)return;const count=records.filter(r=>r.installmentPlanId===id).length+1;records.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),date:today(),type:'分期付款',item:p.name,detail:`第 ${count} 期`,category:'分期',tool:'信用卡',method:'信用卡分期',source:p.source,bookExpense:count===1?p.total:0,bookIncome:0,actualExpense:p.payment,actualIncome:0,costClass:'想要',installmentPayment:p.payment,installmentTotal:p.terms,accountBook:'負債帳',budget:'固定支出',note:p.note,installmentPlanId:id,createdAt:new Date().toISOString()});save();}
-function generateInstallmentRecords(){if(!installments.length){alert('尚無分期主檔');return} if(!confirm('會依每個分期主檔產生缺少的未來期款，確定？'))return;installments.forEach(p=>{const made=records.filter(r=>r.installmentPlanId===p.id).length;for(let i=made+1;i<=p.terms;i++){const d=new Date(p.start);d.setMonth(d.getMonth()+i-1);records.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),date:d.toISOString().slice(0,10),type:'分期付款',item:p.name,detail:`第 ${i} 期`,category:'分期',tool:'信用卡',method:'信用卡分期',source:p.source,bookExpense:i===1?p.total:0,bookIncome:0,actualExpense:p.payment,actualIncome:0,costClass:'想要',installmentPayment:p.payment,installmentTotal:p.terms,accountBook:'負債帳',budget:'固定支出',note:p.note,installmentPlanId:p.id,createdAt:new Date().toISOString()});}});records.sort((a,b)=>new Date(b.date)-new Date(a.date));save();}
-function deleteInstallment(id){if(confirm('刪除分期主檔？已產生的交易紀錄不會自動刪除。')){installments=installments.filter(p=>p.id!==id);save();}}
-function exportJSON(){const data=JSON.stringify({records,installments,options:userOptions,exportedAt:new Date().toISOString()},null,2);download('finance-system-backup.json',data,'application/json')}
-function exportCSV(){const cols=['日期','交易類型','項目','細項','項目類別','收付工具','收付方式','實際支出入帳來源','帳面支出','帳面收入','實際支出','實際收入','帳面小計','實際小計','費用類別','分期該期期款','總共分幾期','帳別','預算','備註'];const csv=[cols.join(',')].concat(records.map(r=>[r.date,r.type,r.item,r.detail,r.category,r.tool,r.method,r.source,r.bookExpense,r.bookIncome,r.actualExpense,r.actualIncome,bookSubtotal(r),actualSubtotal(r),r.costClass,r.installmentPayment,r.installmentTotal,r.accountBook,r.budget,r.note].map(csvCell).join(','))).join('\n');download('finance-records.csv','\ufeff'+csv,'text/csv')}
-function csvCell(v){v=String(v??'');return '"'+v.replace(/"/g,'""')+'"'}
-function download(filename,content,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url)}
-function importJSON(){try{const obj=JSON.parse($('importBox').value);if(!Array.isArray(obj.records))throw new Error('格式錯誤');records=obj.records;installments=Array.isArray(obj.installments)?obj.installments:[];if(obj.options)userOptions=mergeOptions(obj.options);applyOptions();save();alert('匯入完成');}catch(e){alert('匯入失敗：'+e.message)}}
-function escapeHtml(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
-function renderAll(){applyOptions();renderRecords();renderSummaries();renderInstallments();renderOptionSettings()}
-renderAll();
+let db=load();
+const tabs=[['dash','總覽'],['quick','快速記帳'],['txs','交易表'],['budget','預算'],['accounts','帳戶/信用卡'],['invest','投資'],['installments','分期'],['settings','設定']];
+function id(){return 'id'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function load(){try{return merge(defaults,JSON.parse(localStorage.getItem(KEY))||{})}catch(e){return structuredClone(defaults)}}
+function merge(a,b){let out=JSON.parse(JSON.stringify(a));for(const k in b){if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&out[k]) out[k]=merge(out[k],b[k]); else out[k]=b[k]}return out}
+function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll()}
+function money(n){n=Number(n)||0;return n.toLocaleString('zh-TW',{maximumFractionDigits:0})}
+function ym(d){return (d||'').slice(0,7)}
+function today(){return new Date().toISOString().slice(0,10)}
+function signed(dir,amt){amt=Number(amt)||0; if(dir==='收入')return amt; if(dir==='支出')return -amt; return 0}
+function actualSigned(t){return signed(t.actualDirection,t.actualAmount)}
+function bookSigned(t){return signed(t.bookDirection,t.bookAmount)}
+function netCost(t){let out=t.actualDirection==='支出'?Number(t.actualAmount)||0:0;let inc=t.actualDirection==='收入'?Number(t.actualAmount)||0:0;return out-inc-(Number(t.recoveredAmount)||0)}
+function currentMonth(){
+
+return new Date().toISOString().slice(0,7)}
+function show(tab){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById(tab).classList.add('active');document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));renderAll()}
+function init(){document.getElementById('tabs').innerHTML=tabs.map(([idv,txt])=>`<button class="tab ${idv==='dash'?'active':''}" data-tab="${idv}" onclick="show('${idv}')">${txt}</button>`).join('');document.getElementById('date').value=today();document.getElementById('budMonth').value=currentMonth();document.getElementById('trMonth').value=currentMonth();document.getElementById('filterMonth').value=currentMonth();['bookDirection','bookAmount'].forEach(x=>document.getElementById(x).addEventListener('input',syncActual));document.getElementById('syncActual').addEventListener('change',syncActual);renderAll()}
+function fillSelect(idv,arr,blank){let el=document.getElementById(idv); if(!el)return; let val=el.value; el.innerHTML=(blank?'<option value="">全部</option>':'')+arr.map(x=>`<option>${esc(x)}</option>`).join(''); if([...el.options].some(o=>o.value===val))el.value=val}
+function accountNames(){return db.accounts.map(a=>a.name)}
+function renderSelects(){fillSelect('txType',db.options.txTypes);fillSelect('itemCategory',db.options.itemCategories);fillSelect('budgetItem',db.options.budgetItems);fillSelect('payTool',db.options.payTools);fillSelect('payMethod',db.options.payMethods);fillSelect('accountSource',accountNames());fillSelect('financialStatus',db.options.financialStatuses);fillSelect('ledgerType',db.options.ledgerTypes);fillSelect('filterType',db.options.txTypes,true);fillSelect('filterBudget',db.options.budgetItems,true);['budItem','trFrom','trTo'].forEach(x=>fillSelect(x,db.options.budgetItems));fillSelect('accType',db.options.accountTypes);fillSelect('invType',db.options.investmentTypes)}
+function esc(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function syncActual(){let on=document.getElementById('syncActual').checked;document.getElementById('actualBox').classList.toggle('hidden',on);if(on){document.getElementById('actualDirection').value=document.getElementById('bookDirection').value;document.getElementById('actualAmount').value=document.getElementById('bookAmount').value}}
+function txFromForm(){syncActual();let fields=['date','txType','item','subItem','itemCategory','budgetItem','payTool','payMethod','accountSource','financialStatus','bookDirection','bookAmount','actualDirection','actualAmount','recoverFrom','expectedRecover','recoveredAmount','recoverDate','installmentPay','installmentTotal','ledgerType','note'];let t={id:document.getElementById('editId').value||id()};fields.forEach(f=>t[f]=document.getElementById(f).value);return t}
+function saveTx(){let t=txFromForm(); if(!t.date||!t.item){alert('請至少填日期與項目');return} let i=db.transactions.findIndex(x=>x.id===t.id); if(i>=0)db.transactions[i]=t; else db.transactions.unshift(t); resetTxForm(); save(); show('txs')}
+function resetTxForm(){document.getElementById('formTitle').textContent='快速記帳';document.getElementById('editId').value='';['item','subItem','bookAmount','actualAmount','recoverFrom','expectedRecover','recoveredAmount','recoverDate','installmentPay','installmentTotal','note'].forEach(f=>document.getElementById(f).value='');document.getElementById('date').value=today();document.getElementById('syncActual').checked=true;s
+
+yncActual()}
+function editTx(idv){let t=db.transactions.find(x=>x.id===idv);if(!t)return;document.getElementById('formTitle').textContent='編輯交易';Object.keys(t).forEach(k=>{let el=document.getElementById(k);if(el)el.value=t[k]});document.getElementById('editId').value=t.id;document.getElementById('syncActual').checked=(t.bookDirection===t.actualDirection&&String(t.bookAmount)===String(t.actualAmount));syncActual();show('quick')}
+function copyTx(idv){let t={...db.transactions.find(x=>x.id===idv),id:id(),date:today()};db.transactions.unshift(t);save()}
+function delTx(idv){if(confirm('確定刪除這筆交易？')){db.transactions=db.transactions.filter(x=>x.id!==idv);save()}}
+function renderTxTable(){let q=(document.getElementById('q')?.value||'').toLowerCase(),m=document.getElementById('filterMonth')?.value||'',ty=document.getElementById('filterType')?.value||'',bi=document.getElementById('filterBudget')?.value||'';let rows=db.transactions.filter(t=>(!m||ym(t.date)===m)&&(!ty||t.txType===ty)&&(!bi||t.budgetItem===bi)&&(!q||JSON.stringify(t).toLowerCase().includes(q)));document.getElementById('txTable').innerHTML=rows.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.txType)}<br><span class="pill">${esc(t.financialStatus)}</span></td><td><b>${esc(t.item)}</b><br>${esc(t.subItem)}</td><td>${esc(t.itemCategory)}<br>${esc(t.budgetItem)}</td><td>${esc(t.bookDirection)} ${money(t.bookAmount)}</td><td>${esc(t.actualDirection)} ${money(t.actualAmount)}<br>淨成本 ${money(netCost(t))}</td><td>${esc(t.accountSource)}<br>${esc(t.payMethod)}</td><td>${esc(t.recoverFrom||'')}<br>預期 ${money(t.expectedRecover)} / 已收 ${money(t.recoveredAmount)}</td><td><button class="small" onclick="editTx('${t.id}')">編輯</button> <button class="small secondary" onclick="copyTx('${t.id}')">複製</button> <button class="small danger" onclick="delTx('${t.id}')">刪除</button></td></tr>`).join('')||'<tr><td colspan="9">沒有資料</td></tr>'}
+function saveBudget(){let month=budMonth.value,item=budItem.value,amount=Number(budAmount.value)||0;if(!month||!item)return alert('請填月份與預算項目');let b=db.budgets.find(x=>x.month===month&&x.item===item);if(b)b.amount=amount;else db.budgets.push({id:id(),month,item,amount});budAmount.value='';save()}
+function saveBudgetTransfer(){let month=trMonth.value,from=trFrom.value,to=trTo.value,amount=Number(trAmount.value)||0;if(!month||!from||!to||from===to||!amount)return alert('請確認月份、項目與金額');db.budgetTransfers.push({id:id(),month,from,to,amount,note:trNote.value});trAmount.value='';trNote.value='';save()}
+function delTransfer(idv){db.budgetTransfers=db.budgetTransfers.filter(x=>x.id!==idv);save()}
+function budgetRows(month=currentMonth()){let items=[...new Set([...db.options.budgetItems,...db.budgets.filter(b=>b.month===month).map(b=>b.item)])];return items.map(item=>{let base=(db.budgets.find(b=>b.month===month&&b.item===item)||{}).amount||0;let inAmt=db.budgetTransfers.filter(t=>t.month===month&&t.to===item).reduce((s,t)=>s+Number(t.amount||0),0);let outAmt=db.budgetTransfers.filter(t=>t.month===month&&t.from===item).reduce((s,t)=>s+Number(t.amount||0),0);let available=base+inAmt-outAmt;let spent=db.transactions.filter(t=>ym(t.date)===month&&t.budgetItem===item).reduce((s,t)=>s+Math.max(0,netCost(t)),0);return{item,base,inAmt,outAmt,available,spent,left:available-spent}})}
+function renderBudget(){let month=document.getElementById('budMonth')?.value||currentMonth();let rows=budgetRows(month);document.getElementById('budgetReport').innerHTML='<div class="tablewrap"><table><thead><tr>
+
+<th>預算項目</th><th>原始預算</th><th>調入</th><th>調出</th><th>可用預算</th><th>實際花費</th><th>剩餘/超支</th><th>進度</th></tr></thead><tbody>'+rows.map(r=>`<tr><td>${esc(r.item)}</td><td>${money(r.base)}</td><td>${money(r.inAmt)}</td><td>${money(r.outAmt)}</td><td>${money(r.available)}</td><td>${money(r.spent)}</td><td class="${r.left<0?'bad':'ok'}">${money(r.left)}</td><td><div class="bar"><span style="width:${r.available?Math.min(100,r.spent/r.available*100):0}%"></span></div></td></tr>`).join('')+'</tbody></table></div>';document.getElementById('transferTable').innerHTML=db.budgetTransfers.map(t=>`<tr><td>${esc(t.month)}</td><td>${esc(t.from)}</td><td>${esc(t.to)}</td><td>${money(t.amount)}</td><td>${esc(t.note)}</td><td><button class="small danger" onclick="delTransfer('${t.id}')">刪除</button></td></tr>`).join('')||'<tr><td colspan="6">尚無移轉</td></tr>'}
+function accountDelta(name){return db.transactions.filter(t=>t.accountSource===name).reduce((s,t)=>s+actualSigned(t),0)}
+function accountBalance(a){if(a.manual!==''&&a.manual!=null)return Number(a.manual)||0;let d=accountDelta(a.name);return (Number(a.initial)||0)+d}
+function saveAccount(){let name=accName.value.trim();if(!name)return alert('請輸入帳戶名稱');let a={id:id(),name,type:accType.value,initial:Number(accInit.value)||0,manual:accManual.value,include:accInclude.value};let i=db.accounts.findIndex(x=>x.name===name);if(i>=0)db.accounts[i]={...db.accounts[i],...a,id:db.accounts[i].id};else db.accounts.push(a);accName.value='';accInit.value=0;accManual.value='';save()}
+function delAccount(idv){if(confirm('刪除帳戶？交易紀錄不會刪除，但下拉選單不再出現。')){db.accounts=db.accounts.filter(a=>a.id!==idv);save()}}
+function renderAccounts(){document.getElementById('accountTable').innerHTML=db.accounts.map(a=>{let bal=accountBalance(a),d=accountDelta(a.name);return `<tr><td>${esc(a.name)}</td><td>${esc(a.type)}</td><td>${money(a.initial)}</td><td>${money(d)}</td><td class="${bal<0?'bad':'ok'}">${money(bal)}</td><td>${a.include==='yes'?'是':'否'}</td><td><button class="small" onclick="loadAccount('${a.id}')">編輯</button> <button class="small danger" onclick="delAccount('${a.id}')">刪除</button></td></tr>`}).join('')}
+function loadAccount(idv){let a=db.accounts.find(x=>x.id===idv);accName.value=a.name;accType.value=a.type;accInit.value=a.initial;accManual.value=a.manual;accInclude.value=a.include}
+function saveInvestment(){let name=invName.value.trim();if(!name)return alert('請輸入標的名稱');let inv={id:id(),name,type:invType.value,principal:Number(invPrincipal.value)||0,value:Number(invValue.value)||0};let i=db.investments.findIndex(x=>x.name===name);if(i>=0)db.investments[i]={...db.investments[i],...inv,id:db.investments[i].id};else db.investments.push(inv);invName.value='';invPrincipal.value='';invValue.value='';save()}
+function delInvestment(idv){db.investments=db.investments.filter(x=>x.id!==idv);save()}
+function loadInvestment(idv){let x=db.investments.find(i=>i.id===idv);invName.value=x.name;invType.value=x.type;invPrincipal.value=x.principal;invValue.value=x.value}
+function renderInvestments(){document.getElementById('investmentTable').innerHTML=db.investments.map(x=>{let pl=x.value-x.principal,rate=x.principal?pl/x.principal*100:0;return `<tr><td>${esc(x.name)}</td><td>${esc(x.type)}</td><td>${money(x.principal)}</td><td>${money(x.value)}</td><td class="${pl>=0?'ok':'bad'}">${money(pl)}</td><td>${rate.toFixed(1)}%</td><td><button class="small" onclick="loadInvestment('${x.id}')">編輯</button> <button class="small danger" onclick="delInvestment('$
+
+{x.id}')">刪除</button></td></tr>`}).join('')||'<tr><td colspan="7">尚無投資標的</td></tr>'}
+function saveInstallment(){let name=insName.value.trim();if(!name)return alert('請輸入項目');let total=Number(insTotal.value)||0,terms=Number(insTerms.value)||0,paid=Number(insPaidTerms.value)||0;let x={id:id(),name,total,terms,paid};let i=db.installments.findIndex(v=>v.name===name);if(i>=0)db.installments[i]={...db.installments[i],...x,id:db.installments[i].id};else db.installments.push(x);insName.value='';insTotal.value='';insTerms.value='';insPaidTerms.value='';save()}
+function delInstallment(idv){db.installments=db.installments.filter(x=>x.id!==idv);save()}
+function loadInstallment(idv){let x=db.installments.find(i=>i.id===idv);insName.value=x.name;insTotal.value=x.total;insTerms.value=x.terms;insPaidTerms.value=x.paid}
+function renderInstallments(){document.getElementById('installmentTable').innerHTML=db.installments.map(x=>{let per=x.terms?x.total/x.terms:0,remain=Math.max(0,x.total-per*x.paid);return `<tr><td>${esc(x.name)}</td><td>${money(x.total)}</td><td>${x.terms}</td><td>${money(per)}</td><td>${x.paid}</td><td>${money(remain)}</td><td><button class="small" onclick="loadInstallment('${x.id}')">編輯</button> <button class="small danger" onclick="delInstallment('${x.id}')">刪除</button></td></tr>`}).join('')||'<tr><td colspan="7">尚無分期</td></tr>'}
+function renderOptions(){let html='';Object.keys(optionLabels).forEach(k=>{if(k==='accountTypes'||k==='investmentTypes'||k in db.options){html+=`<div class="card" style="box-shadow:none"><b>${optionLabels[k]}</b><div class="row" style="margin-top:8px">${db.options[k].map(v=>`<span class="pill">${esc(v)} <button class="small danger" onclick="removeOpt('${k}','${esc(v)}')">x</button></span>`).join('')}</div><div class="row" style="margin-top:8px"><input id="new_${k}" placeholder="新增${optionLabels[k]}"><button class="small" onclick="addOpt('${k}')">新增</button></div></div>`}});document.getElementById('optionManager').innerHTML=html}
+function addOpt(k){let el=document.getElementById('new_'+k),v=el.value.trim();if(v&&!db.options[k].includes(v)){db.options[k].push(v);el.value='';save()}}
+function removeOpt(k,v){db.options[k]=db.options[k].filter(x=>x!==v);save()}
+function renderDashboard(){let m=currentMonth();let txm=db.transactions.filter(t=>ym(t.date)===m);let actualExpense=txm.reduce((s,t)=>s+(t.actualDirection==='支出'?Number(t.actualAmount)||0:0),0);let actualIncome=txm.reduce((s,t)=>s+(t.actualDirection==='收入'?Number(t.actualAmount)||0:0),0);let receivable=db.transactions.reduce((s,t)=>s+Math.max(0,(Number(t.expectedRecover)||0)-(Number(t.recoveredAmount)||0)),0);let invValue=db.investments.reduce((s,x)=>s+Number(x.value||0),0);let accountAssets=db.accounts.filter(a=>a.include==='yes'&&a.type!=='信用卡').reduce((s,a)=>s+accountBalance(a),0);let cardLiab=db.accounts.filter(a=>a.type==='信用卡').reduce((s,a)=>s+Math.max(0,-accountBalance(a))+Math.max(0,accountBalance(a)),0);let insLiab=db.installments.reduce((s,x)=>s+Math.max(0,(Number(x.total)||0)-((Number(x.terms)?Number(x.total)/Number(x.terms):0)*(Number(x.paid)||0))),0);let totalAssets=accountAssets+invValue;let totalLiab=cardLiab+insLiab;let netWorth=totalAssets-totalLiab;let rows=[['總資產',totalAssets,'ok'],['總負債',totalLiab,'bad'],['淨資產',netWorth,netWorth>=0?'ok':'bad'],['本月實際支出',actualExpense,'bad'],['本月實際收入',actualIncome,'ok'],['待回收款',receivable,'warn'],['投資市值',invValue,'ok'],['分期剩餘',insLiab,'bad']];dashboardKpis.innerHTML=rows.map(r=>`<div class="kpi"><div class=
+
+"name">${r[0]}</div><div class="num ${r[2]}">${money(r[1])}</div></div>`).join('');let br=budgetRows(m);dashBudget.innerHTML=br.slice(0,8).map(r=>`<div style="margin:10px 0"><b>${esc(r.item)}</b> <span class="${r.left<0?'bad':'ok'}">剩餘/超支 ${money(r.left)}</span><div class="bar"><span style="width:${r.available?Math.min(100,r.spent/r.available*100):0}%"></span></div></div>`).join('')||'尚無預算';dashAccounts.innerHTML='<div class="tablewrap"><table><thead><tr><th>帳戶</th><th>類型</th><th>估算餘額</th></tr></thead><tbody>'+db.accounts.map(a=>`<tr><td>${esc(a.name)}</td><td>${esc(a.type)}</td><td>${money(accountBalance(a))}</td></tr>`).join('')+'</tbody></table></div>'}
+function exportData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='finance-system-backup.json';a.click()}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{db=merge(defaults,JSON.parse(r.result));save();alert('匯入完成')}catch(err){alert('匯入失敗')}};r.readAsText(f)}
+function clearAll(){if(confirm('確定清空所有資料？此動作無法復原。')){localStorage.removeItem(KEY);db=load();renderAll()}}
+function renderAll(){renderSelects();renderTxTable();renderBudget();renderAccounts();renderInvestments();renderInstallments();renderOptions();renderDashboard()}
+init();
 </script>
 </body>
 </html>
